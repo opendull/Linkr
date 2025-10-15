@@ -1,6 +1,7 @@
 from app.utils.database import db
 from sqlalchemy.dialects.postgresql import UUID
 
+
 class Friend(db.Model):
     __tablename__ = 'friends'
     id = db.Column(db.Integer, primary_key=True)

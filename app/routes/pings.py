@@ -7,6 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 bp = Blueprint('pings', __name__)
 
+
 @bp.route('', methods=['POST'])
 @validate_token()
 def send_ping():
@@ -21,6 +22,7 @@ def send_ping():
     db.session.commit()
     return jsonify({'message': 'Ping sent'})
 
+
 @bp.route('/incoming', methods=['GET'])
 @validate_token()
 def get_incoming_pings():
@@ -28,6 +30,7 @@ def get_incoming_pings():
     current_id = UUID(get_jwt_identity())
     pings = Ping.query.filter_by(receiver_id=current_id, status='pending').all()
     return jsonify([{'id': p.id, 'sender_id': str(p.sender_id)} for p in pings])
+
 
 @bp.route('/<id>/respond', methods=['POST'])
 @validate_token()

@@ -9,6 +9,7 @@ from sqlalchemy import and_, or_
 
 bp = Blueprint('friends', __name__)
 
+
 @bp.route('', methods=['GET'])
 @validate_token()
 def get_friends():
@@ -18,6 +19,7 @@ def get_friends():
         or_(Friend.user1_id == current_id, Friend.user2_id == current_id)
     ).all()
     return jsonify([{'id': str(u.id), 'name': u.name} for u in friends])
+
 
 @bp.route('/request', methods=['POST'])
 @validate_token()
@@ -35,6 +37,7 @@ def send_request():
     db.session.commit()
     return jsonify({'message': 'Request sent'})
 
+
 @bp.route('/request/<id>/accept', methods=['POST'])
 @validate_token()
 def accept_request(id):
@@ -51,6 +54,7 @@ def accept_request(id):
     db.session.commit()
     return jsonify({'message': 'Accepted'})
 
+
 @bp.route('/request/<id>/reject', methods=['POST'])
 @validate_token()
 def reject_request(id):
@@ -63,6 +67,7 @@ def reject_request(id):
     req.updated_at = db.func.now()
     db.session.commit()
     return jsonify({'message': 'Rejected'})
+
 
 @bp.route('/<id>', methods=['DELETE'])
 @validate_token()

@@ -3,11 +3,11 @@ from app.models.user import User
 from app.models.token import Token
 from app.utils.jwt import generate_token
 from app.utils.database import db
-import bcrypt
-from werkzeug.exceptions import BadRequest
 from app.utils.jwt import validate_token
+import bcrypt
 
 bp = Blueprint('auth', __name__)
+
 
 @bp.route('/register', methods=['POST'])
 def register():
@@ -22,6 +22,7 @@ def register():
     db.session.commit()
     return jsonify({'message': 'Registered', 'user_id': str(user.id)}), 201
 
+
 @bp.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -30,6 +31,7 @@ def login():
         return jsonify({'error': 'Invalid credentials'}), 401
     token = generate_token(str(user.id))
     return jsonify({'token': token, 'user_id': str(user.id)})
+
 
 @bp.route('/logout', methods=['POST'])
 @validate_token()

@@ -5,9 +5,10 @@ from app.models.user import User
 from app.utils.jwt import validate_token
 from app.utils.database import db
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import or_
+from sqlalchemy import and_, or_
 
 bp = Blueprint('locations', __name__)
+
 
 @bp.route('', methods=['POST'])
 @validate_token()
@@ -25,6 +26,7 @@ def update_location():
     db.session.commit()
     return jsonify({'message': 'Updated'})
 
+
 @bp.route('/friends', methods=['GET'])
 @validate_token()
 def get_friends_locations():
@@ -36,9 +38,10 @@ def get_friends_locations():
     return jsonify([{
         'user_id': str(u.id),
         'name': u.name,
-        'latitude': l.latitude,
-        'longitude': l.longitude
-    } for l, u in friends_locs])
+        'latitude': loc.latitude,
+        'longitude': loc.longitude
+    } for loc, u in friends_locs])
+
 
 @bp.route('/<userId>', methods=['GET'])
 @validate_token()

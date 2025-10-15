@@ -1,6 +1,7 @@
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from datetime import timedelta
-from app.models.token import Token
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
+from datetime import datetime, timedelta
+from app.utils.database import db
+
 
 def generate_token(user_id):
     expires = timedelta(hours=1)
@@ -10,6 +11,7 @@ def generate_token(user_id):
     db.session.add(new_token)
     db.session.commit()
     return token
+
 
 def validate_token():
     @jwt_required()

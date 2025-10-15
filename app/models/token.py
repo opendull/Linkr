@@ -1,5 +1,5 @@
 from app.utils.database import db
-from datetime import datetime
+
 
 class Token(db.Model):
     __tablename__ = 'tokens'

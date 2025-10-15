@@ -1,16 +1,16 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from .config import Config
 from .utils.database import db
 from .routes import auth, users, friends, locations, pings
+
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
     db.init_app(app)
-    jwt = JWTManager(app)
+    JWTManager(app)
 
     # Register blueprints
     app.register_blueprint(auth.bp, url_prefix='/auth')

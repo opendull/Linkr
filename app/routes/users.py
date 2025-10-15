@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 bp = Blueprint('users', __name__)
 
+
 @bp.route('/<id>', methods=['GET'])
 @validate_token()
 def get_user(id):
@@ -18,6 +19,7 @@ def get_user(id):
         'name': user.name,
         'profile_picture': user.profile_picture
     })
+
 
 @bp.route('/<id>', methods=['PUT'])
 @validate_token()
