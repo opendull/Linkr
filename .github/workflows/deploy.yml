@@ -53,4 +53,4 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
         run: |
-          railway up --service Linkr
+          railway up
