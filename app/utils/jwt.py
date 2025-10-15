@@ -1,7 +1,7 @@
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
 from datetime import datetime, timedelta
 from app.utils.database import db
-
+from app.models.token import Token
 
 def generate_token(user_id):
     expires = timedelta(hours=1)
