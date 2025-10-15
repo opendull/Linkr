@@ -1,13 +1,11 @@
 from flask import Blueprint, request, jsonify
 from app.models.user import User
 from app.models.token import Token
-from app.utils.jwt import generate_token
+from app.utils.jwt import generate_token, validate_token
 from app.utils.database import db
-from app.utils.jwt import validate_token
 import bcrypt
 
 bp = Blueprint('auth', __name__)
-
 
 @bp.route('/register', methods=['POST'])
 def register():
@@ -22,7 +20,6 @@ def register():
     db.session.commit()
     return jsonify({'message': 'Registered', 'user_id': str(user.id)}), 201
 
-
 @bp.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -32,12 +29,11 @@ def login():
     token = generate_token(str(user.id))
     return jsonify({'token': token, 'user_id': str(user.id)})
 
-
 @bp.route('/logout', methods=['POST'])
 @validate_token()
 def logout():
     from flask_jwt_extended import get_jwt
-    token = get_jwt()['jti']  # Assuming jti is token for simplicity
+    token = get_jwt()['jti']
     tok = Token.query.filter_by(token=token).first()
     if tok:
         tok.is_valid = False
