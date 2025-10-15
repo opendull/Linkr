@@ -27,7 +27,6 @@ jobs:
   deploy:
     needs: build-and-lint
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
