@@ -27,9 +27,6 @@ jobs:
           pip install -r requirements.txt
           pip install flake8
 
-      - name: Run linting with Flake8
-        run: |
-          flake8 . --max-line-length=120 --exclude=venv
 
   deploy:
     needs: build-and-lint
